@@ -1,0 +1,266 @@
+import java.util.Scanner;
+import java.util.Random;
+public class FCGTF
+{
+    
+    //
+    //Método para mostrar a matriz no console
+    //
+    
+    public static void MostrarMatriz(char[][] m, int l, int c)
+    {
+        for(int L=0; L<l; L++)
+        {
+            for(int C=0; C<c; C++)
+            {
+                System.out.printf(" %c ", m[L][C]);
+            }
+            System.out.printf("\n");
+        }
+    }
+    
+    //
+    //Método para obter o valor absoluto
+    //
+    
+    public static double Modulo(int valor)
+    {
+        return Math.abs(valor);
+    }
+    public static void main(String []args)
+    {
+        Scanner ler = new Scanner(System.in);
+        Random ale = new Random();
+        
+        //
+        //Pede ao usuário linhas e colunas da matriz, sendo no mínimo 3x3
+        //
+        
+        System.out.printf("\nDigite o número de linhas desejado na matriz (mínimo 3, deve ser inteiro e positivo): ");
+        int l = ler.nextInt();
+        while(l<3||l<0)
+        {
+            System.out.printf("\nInválido! Digite outro número: ");
+            l = ler.nextInt();
+        }
+        System.out.printf("\nDigite o número de colunas desejado na matriz (mínimo 3), deve ser inteiro e positivo: ");
+        int c = ler.nextInt();
+        while(c<3||c<0)
+        {
+            System.out.printf("\nInválido! Digite outro número: "); 
+            c = ler.nextInt();
+        }
+        
+        //
+        //Gera e mostra no console a matriz requisitada com pontos
+        //
+        
+        char [][]m = new char [l][c];
+        System.out.println("\nMatriz gerada: \n");
+        for(int L=0;L<l;L++)
+        {
+            for(int C=0;C<c;C++)
+            {
+                m[L][C] = '.';
+                System.out.printf(" %c ", m[L][C]);
+            }
+            System.out.println();
+        }
+        
+        //
+        //Popular vetor com coordenadas distintas de LINHAS para os pontos aleatórios que serão gerados
+        //
+        
+        int []v1 = new int [4];
+        for(int i=0;i<v1.length;i++)
+        {
+            boolean ok = true;
+            while(ok)
+            {
+                ok = false;
+                int n = ale.nextInt(l);
+                for(int j=0;j<i-1;j++)
+                {
+                    if(v1[j]==n)
+                    {
+                        ok = true;
+                    }
+                }
+                if(!ok)
+                {
+                    v1[i]=n;
+                }
+            }
+        }
+        
+        //
+        //Popular vetor com coordenadas distintas de COLUNAS para os pontos aleatórios que serão gerados
+        //
+        
+        int []v2 = new int [4];
+        for(int i=0;i<v2.length;i++)
+        {
+            boolean ok = true;
+            while(ok)
+            {
+                ok = false;
+                int n = ale.nextInt(c);
+                for(int j=0;j<i-1;j++)
+                {
+                    if(v2[j]==n)
+                    {
+                        ok = true;
+                    }
+                }
+                if(!ok)
+                {
+                    v2[i]=n;
+                }
+            }
+        }
+        
+        //
+        //Criação dos pontos A, B, C e D, mostrando resultado no console
+        // 
+        
+        int Al = v1[0], Ac = v2[0], Bl = v1[1], Bc = v2[1], Cl = v1[2], Cc = v2[2], Dl = v1[3], Dc = v2[3];
+        m[Al][Ac] = 'A';
+        m[Bl][Bc] = 'B';
+        m[Cl][Cc] = 'C';
+        m[Dl][Dc] = 'D';
+        System.out.println();
+        System.out.println("Matriz preenchida com os pontos A, B, C e D: \n");
+        MostrarMatriz(m, l, c);
+        
+        //
+        //Cálculos das distâncias e deslocamento necessário para ligar os pontos A e B
+        //
+        
+        double D1Y = Modulo(Al-Bl);
+        double D1X = Modulo(Ac-Bc);
+        double D1 = D1X + D1Y;
+        double Deslocamento1Y = D1Y/D1;
+        double Deslocamento1X = D1X/D1;
+        double Pos1Y = Al;
+        double Pos1X = Ac;
+        
+        //
+        //Loop de todas as possibilidades de avanços do ponto A para o ponto B
+        //
+        
+        for(int avanco = 0;avanco<D1;avanco++)
+        {
+            m[(int)Pos1Y][(int)Pos1X] = '+';
+            if(Al<Bl&&Ac==Bc)
+            {
+                Pos1Y+=Deslocamento1Y;
+            }
+            else if(Al==Bl&&Ac<Bc)
+            {
+                Pos1X+=Deslocamento1X;
+            }
+            else if(Al==Bl&&Ac>Bc)
+            {
+                Pos1X-=Deslocamento1X;
+            }
+            else if(Al>Bl&&Ac==Bc)
+            {
+                Pos1Y-=Deslocamento1Y;
+            }
+            else if(Al<Bl&&Bc>Ac)
+            {
+                Pos1Y+=Deslocamento1Y;
+                Pos1X+=Deslocamento1X;
+            }
+            else if(Al>Bl&&Bc<Ac)
+            {
+                Pos1Y-=Deslocamento1Y;
+                Pos1X-=Deslocamento1X;
+            }
+            else if(Al>Bl&&Ac<Bc)
+            {
+                Pos1Y-=Deslocamento1Y;
+                Pos1X+=Deslocamento1X;
+            }
+            else if(Al<Bl&&Ac>Bc)
+            {
+                Pos1Y+=Deslocamento1Y;
+                Pos1X-=Deslocamento1X;
+            }
+        }
+        
+        //
+        //Cálculos das distâncias e deslocamento necessário para ligar os pontos C e D
+        //
+        
+        double D2Y = Modulo(Cl-Dl);
+        double D2X = Modulo(Cc-Dc);
+        double D2 = D2Y + D2X;
+        double Deslocamento2Y = D2Y/D2;
+        double Deslocamento2X = D2X/D2;
+        double Pos2Y = Cl;
+        double Pos2X = Cc;
+        
+        //
+        //Loop de todas as possibilidades de avanços do ponto C para o ponto D
+        //
+    
+        for(int avanco = 0;avanco<D2;avanco++)
+        {
+            m[(int)Pos2Y][(int)Pos2X] = '*';
+            if(Cl<Dl&&Cc==Dc)
+            {
+                Pos2Y+=Deslocamento2Y;
+            }
+            else if(Cl>Dl&&Cc==Dc)
+            {
+                Pos2Y-=Deslocamento2Y;
+            }
+            else if(Cl==Dl&&Cc<Dc)
+            {
+                Pos2X+=Deslocamento2Y;
+            }
+            else if(Cl==Dl&&Cc>Dc)
+            {
+                Pos2X-=Deslocamento2Y;
+            }
+            else if(Cl<Dl&&Dc>Cc)
+            {
+                Pos2Y+=Deslocamento2Y;
+                Pos2X+=Deslocamento2X;
+            }
+            else if(Cl>Dl&&Dc<Cc)
+            {
+                Pos2Y-=Deslocamento2Y;
+                Pos2X-=Deslocamento2X;
+            }
+            else if(Cl>Dl&&Cc<Dc)
+            {
+                Pos2Y-=Deslocamento2Y;
+                Pos2X+=Deslocamento2X;
+            }
+            else if(Cl<Dl&&Cc>Dc)
+            {
+                Pos2Y+=Deslocamento2Y;
+                Pos2X-=Deslocamento2X;
+            }
+        }
+        
+        //
+        //Garantia de que os pontos A, B, C e D estejam marcados na matriz
+        //
+        
+        m[Al][Ac] = 'A';
+        m[Bl][Bc] = 'B';
+        m[Cl][Cc] = 'C';
+        m[Dl][Dc] = 'D';
+        
+        //
+        //Mostrar matriz final resultante
+        //
+        
+        System.out.println();
+        System.out.println("Matriz com os pontos A, B, C e D ligados: \n");
+        MostrarMatriz(m, l, c);
+    }
+}
