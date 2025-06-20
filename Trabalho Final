@@ -218,11 +218,11 @@ public class FCGTF
             }
             else if(Cl==Dl&&Cc<Dc)
             {
-                Pos2X+=Deslocamento2Y;
+                Pos2X+=Deslocamento2X;
             }
             else if(Cl==Dl&&Cc>Dc)
             {
-                Pos2X-=Deslocamento2Y;
+                Pos2X-=Deslocamento2X;
             }
             else if(Cl<Dl&&Dc>Cc)
             {
