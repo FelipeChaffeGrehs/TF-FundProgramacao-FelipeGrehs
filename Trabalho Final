@@ -68,62 +68,37 @@ public class FCGTF
         }
         
         //
-        //Popular vetor com coordenadas distintas de LINHAS para os pontos aleatórios que serão gerados
+        //Popular matriz [x][linhas/colunas] com coordenadas distintas para os pontos aleatórios a serem gerados
         //
         
-        int []v1 = new int [4];
-        for(int i=0;i<v1.length;i++)
+        int [][]p = new int [4][2];
+        int cont = 0;
+        while(cont<4)
         {
-            boolean ok = true;
-            while(ok)
+            int linha = ale.nextInt(l);
+            int coluna = ale.nextInt(c);
+            boolean repete = false;
+            for(int i = 0;i<cont;i++)
             {
-                ok = false;
-                int n = ale.nextInt(l);
-                for(int j=0;j<i-1;j++)
+                if(p[i][0]==linha&&p[i][1]==coluna)
                 {
-                    if(v1[j]==n)
-                    {
-                        ok = true;
-                    }
+                    repete = true;
+                    break;
                 }
-                if(!ok)
-                {
-                    v1[i]=n;
-                }
+            }
+            if(!repete)
+            {
+                p[cont][0] = linha;
+                p[cont][1] = coluna;
+                cont++;
             }
         }
         
         //
-        //Popular vetor com coordenadas distintas de COLUNAS para os pontos aleatórios que serão gerados
+        //Criação dos pontos e mostrar na matriz
         //
         
-        int []v2 = new int [4];
-        for(int i=0;i<v2.length;i++)
-        {
-            boolean ok = true;
-            while(ok)
-            {
-                ok = false;
-                int n = ale.nextInt(c);
-                for(int j=0;j<i-1;j++)
-                {
-                    if(v2[j]==n)
-                    {
-                        ok = true;
-                    }
-                }
-                if(!ok)
-                {
-                    v2[i]=n;
-                }
-            }
-        }
-        
-        //
-        //Criação dos pontos A, B, C e D, mostrando resultado no console
-        // 
-        
-        int Al = v1[0], Ac = v2[0], Bl = v1[1], Bc = v2[1], Cl = v1[2], Cc = v2[2], Dl = v1[3], Dc = v2[3];
+        int Al = p[0][0], Ac = p[0][1], Bl = p[1][0], Bc = p[1][1], Cl = p[2][0], Cc = p[2][1], Dl = p[3][0], Dc = p[3][1];
         m[Al][Ac] = 'A';
         m[Bl][Bc] = 'B';
         m[Cl][Cc] = 'C';
@@ -145,48 +120,29 @@ public class FCGTF
         double Pos1X = Ac;
         
         //
-        //Loop de todas as possibilidades de avanços do ponto A para o ponto B
+        //Loop de avanços do ponto A para o ponto B
         //
         
         for(int avanco = 0;avanco<D1;avanco++)
         {
             m[(int)Pos1Y][(int)Pos1X] = '+';
-            if(Al<Bl&&Ac==Bc)
+            if(Al<Bl)
             {
                 Pos1Y+=Deslocamento1Y;
             }
-            else if(Al==Bl&&Ac<Bc)
-            {
-                Pos1X+=Deslocamento1X;
-            }
-            else if(Al==Bl&&Ac>Bc)
-            {
-                Pos1X-=Deslocamento1X;
-            }
-            else if(Al>Bl&&Ac==Bc)
+            else if(Al>Bl)
             {
                 Pos1Y-=Deslocamento1Y;
             }
-            else if(Al<Bl&&Bc>Ac)
+            if(Ac<Bc)
             {
-                Pos1Y+=Deslocamento1Y;
                 Pos1X+=Deslocamento1X;
             }
-            else if(Al>Bl&&Bc<Ac)
+            else if(Ac>Bc)
             {
-                Pos1Y-=Deslocamento1Y;
                 Pos1X-=Deslocamento1X;
             }
-            else if(Al>Bl&&Ac<Bc)
-            {
-                Pos1Y-=Deslocamento1Y;
-                Pos1X+=Deslocamento1X;
-            }
-            else if(Al<Bl&&Ac>Bc)
-            {
-                Pos1Y+=Deslocamento1Y;
-                Pos1X-=Deslocamento1X;
-            }
+            
         }
         
         //
@@ -202,46 +158,26 @@ public class FCGTF
         double Pos2X = Cc;
         
         //
-        //Loop de todas as possibilidades de avanços do ponto C para o ponto D
+        //Loop de avanços do ponto C para o ponto D
         //
     
         for(int avanco = 0;avanco<D2;avanco++)
         {
             m[(int)Pos2Y][(int)Pos2X] = '*';
-            if(Cl<Dl&&Cc==Dc)
+            if(Cl<Dl)
             {
                 Pos2Y+=Deslocamento2Y;
             }
-            else if(Cl>Dl&&Cc==Dc)
+            else if(Cl>Dl)
             {
                 Pos2Y-=Deslocamento2Y;
             }
-            else if(Cl==Dl&&Cc<Dc)
+            if(Cc<Dc)
             {
                 Pos2X+=Deslocamento2X;
             }
-            else if(Cl==Dl&&Cc>Dc)
+            else if(Cc>Dc)
             {
-                Pos2X-=Deslocamento2X;
-            }
-            else if(Cl<Dl&&Dc>Cc)
-            {
-                Pos2Y+=Deslocamento2Y;
-                Pos2X+=Deslocamento2X;
-            }
-            else if(Cl>Dl&&Dc<Cc)
-            {
-                Pos2Y-=Deslocamento2Y;
-                Pos2X-=Deslocamento2X;
-            }
-            else if(Cl>Dl&&Cc<Dc)
-            {
-                Pos2Y-=Deslocamento2Y;
-                Pos2X+=Deslocamento2X;
-            }
-            else if(Cl<Dl&&Cc>Dc)
-            {
-                Pos2Y+=Deslocamento2Y;
                 Pos2X-=Deslocamento2X;
             }
         }
