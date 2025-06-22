@@ -126,23 +126,42 @@ public class FCGTF
         for(int avanco = 0;avanco<D1;avanco++)
         {
             m[(int)Pos1Y][(int)Pos1X] = '+';
-            if(Al<Bl)
+            if(Al<Bl&&Ac==Bc)
             {
                 Pos1Y+=Deslocamento1Y;
             }
-            else if(Al>Bl)
-            {
-                Pos1Y-=Deslocamento1Y;
-            }
-            if(Ac<Bc)
+            else if(Al==Bl&&Ac<Bc)
             {
                 Pos1X+=Deslocamento1X;
             }
-            else if(Ac>Bc)
+            else if(Al==Bl&&Ac>Bc)
             {
                 Pos1X-=Deslocamento1X;
             }
-            
+            else if(Al>Bl&&Ac==Bc)
+            {
+                Pos1Y-=Deslocamento1Y;
+            }
+            else if(Al<Bl&&Bc>Ac)
+            {
+                Pos1Y+=Deslocamento1Y;
+                Pos1X+=Deslocamento1X;
+            }
+            else if(Al>Bl&&Bc<Ac)
+            {
+                Pos1Y-=Deslocamento1Y;
+                Pos1X-=Deslocamento1X;
+            }
+            else if(Al>Bl&&Ac<Bc)
+            {
+                Pos1Y-=Deslocamento1Y;
+                Pos1X+=Deslocamento1X;
+            }
+            else if(Al<Bl&&Ac>Bc)
+            {
+                Pos1Y+=Deslocamento1Y;
+                Pos1X-=Deslocamento1X;
+            }
         }
         
         //
@@ -164,20 +183,40 @@ public class FCGTF
         for(int avanco = 0;avanco<D2;avanco++)
         {
             m[(int)Pos2Y][(int)Pos2X] = '*';
-            if(Cl<Dl)
+            if(Cl<Dl&&Cc==Dc)
             {
                 Pos2Y+=Deslocamento2Y;
             }
-            else if(Cl>Dl)
+            else if(Cl>Dl&&Cc==Dc)
             {
                 Pos2Y-=Deslocamento2Y;
             }
-            if(Cc<Dc)
+            else if(Cl==Dl&&Cc<Dc)
             {
                 Pos2X+=Deslocamento2X;
             }
-            else if(Cc>Dc)
+            else if(Cl==Dl&&Cc>Dc)
             {
+                Pos2X-=Deslocamento2X;
+            }
+            else if(Cl<Dl&&Dc>Cc)
+            {
+                Pos2Y+=Deslocamento2Y;
+                Pos2X+=Deslocamento2X;
+            }
+            else if(Cl>Dl&&Dc<Cc)
+            {
+                Pos2Y-=Deslocamento2Y;
+                Pos2X-=Deslocamento2X;
+            }
+            else if(Cl>Dl&&Cc<Dc)
+            {
+                Pos2Y-=Deslocamento2Y;
+                Pos2X+=Deslocamento2X;
+            }
+            else if(Cl<Dl&&Cc>Dc)
+            {
+                Pos2Y+=Deslocamento2Y;
                 Pos2X-=Deslocamento2X;
             }
         }
